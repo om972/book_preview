@@ -39,6 +39,7 @@
             const [selectedTopic, setSelectedTopic] = useState('');
             const [expandedTopics, setExpandedTopics] = useState({});
             const [expandedStudents, setExpandedStudents] = useState({ 1: true });
+            const [expandedModules, setExpandedModules] = useState({ 1: true });
             const [rosterData, setRosterData] = useState([
                 { id: 1, name: 'Sophia Martinez', password: '150', accessELA: true, accessFoundational: true, accessReading: false, allowReadAloud: false, dyslexiaSupport: false },
                 { id: 2, name: 'Jackson Lee', password: '234', accessELA: true, accessFoundational: true, accessReading: true, allowReadAloud: false, dyslexiaSupport: false },
@@ -62,6 +63,13 @@
                 }));
             };
 
+            const toggleModule = (moduleId) => {
+                setExpandedModules(prev => ({
+                    ...prev,
+                    [moduleId]: !prev[moduleId]
+                }));
+            };
+
             const [selectedStudentTab, setSelectedStudentTab] = useState({});
 
             const updateRosterCheckbox = (studentId, field) => {
@@ -78,6 +86,192 @@
             };
 
             const grades = ['K', 'G1', 'G2', 'G3', 'G4', 'G5'];
+
+            const curriculumModulesK = [
+                {
+                    id: 1,
+                    title: 'Module 1. In the Forest',
+                    description: 'In this module, students are introduced to the first group of letters (M, T, P, N, A) and their corresponding sounds. They practice identifying, naming, and producing primary sounds of the letters. Students also practice matching upper- and lowercase letters. They learn to isolate the initial sound in three-phoneme words (CVC) and recognizing rhymes.',
+                    color: 'purple',
+                    units: [
+                        { unit: 1, phonics: 'Recognize Lowercase Letter m and Sound /m/', phonological: 'Isolate Initial sound /m/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 2, phonics: 'Recognize Lowercase Letter t and Sound /t/', phonological: 'Isolate Initial sound /t/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 3, phonics: 'Review letter/sound m, t', phonological: 'Review Isolate Initial sound m, t', standards: 'RF.K.1.B RF.K.2.D', ready: true },
+                        { unit: 4, phonics: 'Recognize Lowercase Letter p and Sound /p/', phonological: 'Isolate Initial sound /p/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 5, phonics: 'Recognize Lowercase Letter n and Sound /n/', phonological: 'Isolate Initial sound /n/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 6, phonics: 'Recognize Lowercase Letter a and Sound /a/', phonological: 'Isolate Initial sound /a/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 7, phonics: 'Review letter/sound m, t, p, n. Learn Matching Upper and Lowercase Letters', phonological: 'Review Isolate Initial sound m, t, p, n', standards: 'RF.K.1.D', ready: true },
+                        { unit: 8, phonics: 'Rhyming words', phonological: 'Recognizing rhymes', standards: 'RF.K.1.B RF.K.2.A', ready: true },
+                        { unit: 9, phonics: 'CVC, vowel /a/', phonological: 'CVC; word family -at, -ap, -an. Blend', standards: 'RF.K.1.A RF.K.1.B RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 10, phonics: 'Matching Upper and Lowercase Letters: m, t, p, n, a', phonological: 'Matching Upper and Lowercase Letters', standards: 'RF.K.1.D', ready: true }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: 'Module 2. Under the Sea',
+                    description: 'In this module, students continue learning letters and sounds (B, L, K, H, E). They practice isolating initial and final sounds in CVC words, working with word families, and recognizing rhyming patterns.',
+                    color: 'orange',
+                    units: [
+                        { unit: 1, phonics: 'Recognize Lowercase Letter b and Sound /b/', phonological: 'Isolate Initial sound /b/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 2, phonics: 'Recognize Lowercase Letter l and Sound /l/', phonological: 'Isolate Initial sound /l/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 3, phonics: 'Review letter/sound b, l', phonological: 'Review Isolate Initial sound b, l', standards: 'RF.K.1.B RF.K.2.D', ready: true },
+                        { unit: 4, phonics: 'Recognize Lowercase Letter k and Sound /k/', phonological: 'Isolate Initial sound /k/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 5, phonics: 'Recognize Lowercase Letter h and Sound /h/', phonological: 'Isolate Initial sound /h/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 6, phonics: 'Recognize Lowercase Letter e and Sound /e/', phonological: 'Isolate Initial sound /e/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 7, phonics: 'Review letter/sound b, l, k, h. Matching Upper and Lowercase Letters', phonological: 'Review Isolate Initial sound b, l, k, h', standards: 'RF.K.1.D', ready: true },
+                        { unit: 8, phonics: 'Rhyming words', phonological: 'Produce rhymes', standards: 'RF.K.1.B RF.K.2.A', ready: true },
+                        { unit: 9, phonics: 'CVC, vowel /e/', phonological: 'CVC; word family -en, -et. Blend and Segment', standards: 'RF.K.1.A RF.K.1.B RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 10, phonics: 'Matching Upper and Lowercase Letters: b, l, k, h, e', phonological: 'Matching Upper and Lowercase Letters', standards: 'RF.K.1.D', ready: true }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: 'Module 3. On the Farm',
+                    description: 'Students learn letters C, D, G, S, O and their sounds. They practice recognizing final sounds in words, working with medial vowels in CVC words, and continuing phonological awareness development.',
+                    color: 'blue',
+                    units: [
+                        { unit: 1, phonics: 'Recognize Lowercase Letter c and Sound /k/', phonological: 'Isolate Initial sound /k/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 2, phonics: 'Recognize Lowercase Letter d and Sound /d/', phonological: 'Isolate Initial sound /d/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 3, phonics: 'Review letter/sound c, d. Recognize Final sound', phonological: 'Isolate Final sound /t/, /p/', standards: 'RF.K.1.B RF.K.2.D', ready: true },
+                        { unit: 4, phonics: 'Recognize Lowercase Letter g and Sound /g/', phonological: 'Isolate Initial sound /g/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 5, phonics: 'Recognize Lowercase Letter s and Sound /s/', phonological: 'Isolate Initial sound /s/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 6, phonics: 'Recognize Lowercase Letter o and Sound /o/', phonological: 'Isolate Medial sound /o/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 7, phonics: 'Review letter/sound c, d, g, s. Matching Upper and Lowercase', phonological: 'Review sounds. Isolate Final sound /d/, /g/', standards: 'RF.K.1.D RF.K.2.D', ready: true },
+                        { unit: 8, phonics: 'Rhyming words', phonological: 'Produce and identify rhymes', standards: 'RF.K.1.B RF.K.2.A', ready: true },
+                        { unit: 9, phonics: 'CVC, vowel /o/', phonological: 'CVC; word family -og, -op, -ot. Blend and Segment', standards: 'RF.K.1.A RF.K.1.B RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 10, phonics: 'Matching Upper and Lowercase Letters: c, d, g, s, o', phonological: 'Matching Upper and Lowercase Letters', standards: 'RF.K.1.D', ready: true }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: 'Module 4. Through the Snowy Land',
+                    description: 'Students explore letters J, F, R, V, W, I and their sounds. They focus on blending sounds in CVC words, segmenting sounds, and producing rhymes with increasing proficiency.',
+                    color: 'green',
+                    units: [
+                        { unit: 1, phonics: 'Recognize Lowercase Letter j and Sound /j/', phonological: 'Isolate Initial sound /j/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 2, phonics: 'Recognize Lowercase Letter f and Sound /f/', phonological: 'Isolate Initial sound /f/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 3, phonics: 'Review letter/sound j, f. Recognize Final sound', phonological: 'Isolate Final sound /n/, /b/', standards: 'RF.K.1.B RF.K.2.D', ready: true },
+                        { unit: 4, phonics: 'Recognize Lowercase Letter r and Sound /r/', phonological: 'Isolate Initial sound /r/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 5, phonics: 'Recognize Lowercase Letter v and Sound /v/', phonological: 'Isolate Initial sound /v/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 6, phonics: 'Recognize Lowercase Letter w and Sound /w/', phonological: 'Isolate Initial sound /w/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 7, phonics: 'Recognize Lowercase Letter i and Sound /i/', phonological: 'Isolate Medial sound /i/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 8, phonics: 'Review letters. Matching Upper and Lowercase', phonological: 'Review sounds. Produce rhymes', standards: 'RF.K.1.D RF.K.2.A', ready: true },
+                        { unit: 9, phonics: 'CVC, vowel /i/', phonological: 'CVC; word family -ig, -in, -it. Blend and Segment', standards: 'RF.K.1.A RF.K.1.B RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 10, phonics: 'Matching Upper and Lowercase Letters: j, f, r, v, w, i', phonological: 'Matching Upper and Lowercase Letters', standards: 'RF.K.1.D', ready: true }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: 'Module 5. On the Town',
+                    description: 'The final module introduces letters Q, X, Y, Z, U. Students practice alphabetical order, master blending and segmenting sounds, and learn to distinguish between similar-sounding words.',
+                    color: 'pink',
+                    units: [
+                        { unit: 1, phonics: 'Recognize Lowercase Letter q and Sound /kw/', phonological: 'Isolate Initial sound /kw/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 2, phonics: 'Recognize Lowercase Letter x and Sound /ks/', phonological: 'Isolate Final sound /ks/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 3, phonics: 'Recognize Lowercase Letter y and Sound /y/', phonological: 'Isolate Initial sound /y/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 4, phonics: 'Recognize Lowercase Letter z and Sound /z/', phonological: 'Isolate Initial sound /z/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 5, phonics: 'Recognize Lowercase Letter u and Sound /u/', phonological: 'Isolate Medial sound /u/', standards: 'RF.K.1.A RF.K.1.B RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 6, phonics: 'Alphabetical Order', phonological: 'Review all letter sounds', standards: 'RF.K.1.A RF.K.1.D', ready: true },
+                        { unit: 7, phonics: 'CVC, vowel /u/', phonological: 'CVC; word family -ug, -un, -ut. Blend and Segment', standards: 'RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 8, phonics: 'Review all letters and sounds', phonological: 'Distinguish similar words', standards: 'RF.K.2.D RF.K.3.A', ready: true },
+                        { unit: 9, phonics: 'Matching Upper and Lowercase Letters: q, x, y, z, u', phonological: 'Matching Upper and Lowercase Letters', standards: 'RF.K.1.D', ready: true },
+                        { unit: 10, phonics: 'Final Review - All letters', phonological: 'Final Review - All phonological skills', standards: 'RF.K.1.A RF.K.1.B RF.K.1.D RF.K.2.A RF.K.2.B RF.K.2.C RF.K.2.D RF.K.3.A', ready: true }
+                    ]
+                }
+            ];
+
+            const curriculumModulesG1 = [
+                {
+                    id: 1,
+                    title: 'Module 1',
+                    description: 'In this module, students learn consonant blends, vowel teams, digraphs, and practice decoding and reading fluency.',
+                    color: 'purple',
+                    units: [
+                        { unit: 1, lessonName: 'Consonant Blend "st"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 2, lessonName: 'Consonant Blend "sp"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 3, lessonName: 'Vowel Team "ai"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 4, lessonName: 'Consonant Blend "sw"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 5, lessonName: 'Vowel Team "ay"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 6, lessonName: 'Decoding Practice', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.B', ready: true },
+                        { unit: 7, lessonName: 'Digraph "sh"', instructionalFocus: 'Phonics', standards: 'RF.1.3.A', ready: true },
+                        { unit: 8, lessonName: 'Final -e, Long Vowel "a"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C RF.1.2.A', ready: true },
+                        { unit: 9, lessonName: 'Consonant Blend "sn"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 10, lessonName: 'Decoding Practice', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.B', ready: true }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: 'Module 2',
+                    description: 'Students continue building phonics skills with more complex consonant blends, vowel teams, and word patterns.',
+                    color: 'orange',
+                    units: [
+                        { unit: 1, lessonName: 'Consonant Blend "bl"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 2, lessonName: 'Vowel Team "ee"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 3, lessonName: 'Consonant Blend "cl"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 4, lessonName: 'Vowel Team "ea"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 5, lessonName: 'Digraph "ch"', instructionalFocus: 'Phonics', standards: 'RF.1.3.A', ready: true },
+                        { unit: 6, lessonName: 'Final -e, Long Vowel "i"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C RF.1.2.A', ready: true },
+                        { unit: 7, lessonName: 'Consonant Blend "fl"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 8, lessonName: 'Decoding Practice', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.B', ready: true },
+                        { unit: 9, lessonName: 'Digraph "th"', instructionalFocus: 'Phonics', standards: 'RF.1.3.A', ready: true },
+                        { unit: 10, lessonName: 'Vowel Team "oa"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: 'Module 3',
+                    description: 'Advanced phonics patterns including r-controlled vowels, complex blends, and multisyllabic words.',
+                    color: 'blue',
+                    units: [
+                        { unit: 1, lessonName: 'R-Controlled Vowel "ar"', instructionalFocus: 'Phonics', standards: 'RF.1.3.B', ready: true },
+                        { unit: 2, lessonName: 'Consonant Blend "tr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 3, lessonName: 'Vowel Team "ow"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 4, lessonName: 'R-Controlled Vowel "or"', instructionalFocus: 'Phonics', standards: 'RF.1.3.B', ready: true },
+                        { unit: 5, lessonName: 'Consonant Blend "dr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 6, lessonName: 'Final -e, Long Vowel "o"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C RF.1.2.A', ready: true },
+                        { unit: 7, lessonName: 'Decoding Practice', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.B', ready: true },
+                        { unit: 8, lessonName: 'Digraph "wh"', instructionalFocus: 'Phonics', standards: 'RF.1.3.A', ready: true },
+                        { unit: 9, lessonName: 'Vowel Team "oo"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 10, lessonName: 'R-Controlled Vowel "er"', instructionalFocus: 'Phonics', standards: 'RF.1.3.B', ready: true }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: 'Module 4',
+                    description: 'Focus on complex vowel patterns, diphthongs, and advanced word recognition strategies.',
+                    color: 'green',
+                    units: [
+                        { unit: 1, lessonName: 'Vowel Team "ou"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 2, lessonName: 'Consonant Blend "br"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 3, lessonName: 'Vowel Team "oi"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 4, lessonName: 'Final -e, Long Vowel "u"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C RF.1.2.A', ready: true },
+                        { unit: 5, lessonName: 'Consonant Blend "gr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 6, lessonName: 'Decoding Practice', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.B', ready: true },
+                        { unit: 7, lessonName: 'R-Controlled Vowel "ir"', instructionalFocus: 'Phonics', standards: 'RF.1.3.B', ready: true },
+                        { unit: 8, lessonName: 'Vowel Team "oy"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 9, lessonName: 'Consonant Blend "pr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 10, lessonName: 'Vowel Team "au"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: 'Module 5',
+                    description: 'Advanced decoding, multisyllabic words, and comprehensive reading fluency practice.',
+                    color: 'pink',
+                    units: [
+                        { unit: 1, lessonName: 'R-Controlled Vowel "ur"', instructionalFocus: 'Phonics', standards: 'RF.1.3.B', ready: true },
+                        { unit: 2, lessonName: 'Consonant Blend "fr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 3, lessonName: 'Vowel Team "ew"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 4, lessonName: 'Consonant Blend "cr"', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 5, lessonName: 'Decoding Multisyllabic Words', instructionalFocus: 'Phonology, Reading Fluency', standards: 'RF.1.3.E', ready: true },
+                        { unit: 6, lessonName: 'Soft "c" and "g"', instructionalFocus: 'Phonics', standards: 'RF.1.3.G', ready: true },
+                        { unit: 7, lessonName: 'Vowel Team "ie"', instructionalFocus: 'Phonics', standards: 'RF.1.3.C', ready: true },
+                        { unit: 8, lessonName: 'Final Consonant Blends', instructionalFocus: 'Phonics', standards: 'RF.1.2.B', ready: true },
+                        { unit: 9, lessonName: 'Reading Fluency Practice', instructionalFocus: 'Reading Fluency', standards: 'RF.1.4.A RF.1.4.B', ready: true },
+                        { unit: 10, lessonName: 'Comprehensive Review', instructionalFocus: 'Phonics, Reading Fluency', standards: 'RF.1.3.A RF.1.3.B RF.1.3.C', ready: true }
+                    ]
+                }
+            ];
 
             const weeklyReportData = [
                 { 
@@ -146,15 +340,15 @@
                     name: 'Holidays',
                     texts: [
                         { id: 1, title: 'The Magic Snow Day', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.7'], image: 'https://raw.githubusercontent.com/om972/book_preview/450de55e0a6367d0497f87b5b2e47e9e938e41f6/Blue%20dog%20on%20a%20sofa' },
-                        { id: 2, title: 'A Pumpkin for Everyone', type: 'Literature', level: 1, standards: ['K.RL.2', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_2' },
+                        { id: 2, title: 'A Halloween Mask', type: 'Literature', level: 1, standards: ['K.RL.2', 'K.RL.3'], image: 'https://github.com/om972/book_preview/blob/ef1480089884c558d5ff2f3159f631011e8ecfd3/Halloween.png' },
                         { id: 3, title: 'Bunny\'s Spring Surprise', type: 'Literature', level: 3, standards: ['K.RL.1', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_3' },
-                        { id: 4, title: 'The 100th Day of School Party', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_4' },
-                        { id: 5, title: 'Fireworks for the Fourth!', type: 'Informational', level: 3, standards: ['K.RI.3', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_5' },
-                        { id: 6, title: 'A Valentine for My Friend', type: 'Literature', level: 1, standards: ['K.RL.5', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_6' },
-                        { id: 7, title: 'The Little Turkey\'s Secret', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_7' },
-                        { id: 8, title: 'Santa\'s Smallest Helper', type: 'Literature', level: 3, standards: ['K.RL.3', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_8' },
-                        { id: 9, title: 'The Egg Hunt Adventure', type: 'Literature', level: 4, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_9' },
-                        { id: 10, title: 'New Year, New Me!', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_10' }
+                        // { id: 4, title: 'The 100th Day of School Party', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_4' },
+                        // { id: 5, title: 'Fireworks for the Fourth!', type: 'Informational', level: 3, standards: ['K.RI.3', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_5' },
+                        // { id: 6, title: 'A Valentine for My Friend', type: 'Literature', level: 1, standards: ['K.RL.5', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_6' },
+                        // { id: 7, title: 'The Little Turkey\'s Secret', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_7' },
+                        // { id: 8, title: 'Santa\'s Smallest Helper', type: 'Literature', level: 3, standards: ['K.RL.3', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_8' },
+                        // { id: 9, title: 'The Egg Hunt Adventure', type: 'Literature', level: 4, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_9' },
+                        // { id: 10, title: 'New Year, New Me!', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_10' }
                     ]
                 },
                 {
@@ -177,16 +371,9 @@
                     id: 'animals',
                     name: 'Animals',
                     texts: [
-                        { id: 21, title: 'The Lost Kitten', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_21' },
-                        { id: 22, title: 'Bear\'s Big Picnic', type: 'Literature', level: 2, standards: ['K.RL.3', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_22' },
-                        { id: 23, title: 'A Frog in My Boot', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_23' },
-                        { id: 24, title: 'The Busy Ant Parade', type: 'Informational', level: 3, standards: ['K.RI.1', 'K.RI.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_24' },
-                        { id: 25, title: 'Puppy Finds a Home', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_25' },
-                        { id: 26, title: 'Ellie the Elephant Learns to Dance', type: 'Literature', level: 4, standards: ['K.RL.2', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_26' },
-                        { id: 27, title: 'Tiny Turtle\'s Big Adventure', type: 'Literature', level: 3, standards: ['K.RL.1', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_27' },
-                        { id: 28, title: 'The Clever Fox and the Hen', type: 'Literature', level: 5, standards: ['K.RL.3', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_28' },
-                        { id: 29, title: 'Buzzy the Bee Helps Out', type: 'Informational', level: 2, standards: ['K.RI.3', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_29' },
-                        { id: 30, title: 'The Animal Parade', type: 'Informational', level: 3, standards: ['K.RI.1', 'K.RI.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_30' }
+                        { id: 29, title: 'Buzzy the Bee Helps Out', type: 'Informational', level: 2, standards: ['K.RI.3', 'K.RI.4'], image: 'https://raw.githubusercontent.com/om972/book_preview/04bce132341fb95d0022ff40347539a76ba9a30d/bee.png' },
+                        { id: 21, title: 'The Lost Kitten', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.2'], image: 'https://raw.githubusercontent.com/om972/book_preview/04bce132341fb95d0022ff40347539a76ba9a30d/kittens.png' },
+                        { id: 22, title: 'Blue Dog\'s Big Adventure', type: 'Literature', level: 2, standards: ['K.RL.3', 'K.RL.4'], image: 'https://raw.githubusercontent.com/om972/book_preview/04bce132341fb95d0022ff40347539a76ba9a30d/blue%20dog.png' }
                     ]
                 }
             ];
@@ -344,9 +531,9 @@
                         </button>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white rounded-lg overflow-hidden">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="bg-white border-b border-gray-200">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Student</th>
                                     <th className="px-6 py-3 text-right text-sm font-semibold text-gray-700">Weekly Time Spent</th>
@@ -357,7 +544,7 @@
                             <tbody>
                                 {weeklyReportData.map((student) => (
                                     <React.Fragment key={student.id}>
-                                        <tr className="border-b border-gray-200 hover:bg-gray-50">
+                                        <tr className="bg-white hover:bg-gray-50 border-b-4 border-transparent" style={{boxShadow: '0 2px 4px rgba(0,0,0,0.08)', marginBottom: '4px'}}>
                                             <td className="px-6 py-4 text-sm text-gray-900 font-medium">{student.name}</td>
                                             <td className="px-6 py-4 text-sm text-gray-700 text-right">{student.timeSpent}</td>
                                             <td className="px-6 py-4 text-sm text-gray-700 text-right">{student.accuracy}</td>
@@ -380,7 +567,6 @@
                                                 <td colSpan="4" className="px-6 py-6">
                                                     {student.id === 1 ? (
                                                         <>
-                                                            {/* Tabs */}
                                                             <div className="flex gap-4 mb-4 border-b border-gray-300">
                                                                 <button
                                                                     onClick={() => setSelectedStudentTab(prev => ({...prev, [student.id]: 'reading'}))}
@@ -404,7 +590,6 @@
                                                                 </button>
                                                             </div>
 
-                                                            {/* Reading Tab */}
                                                             {(!selectedStudentTab[student.id] || selectedStudentTab[student.id] === 'reading') && (
                                                                 <div className="space-y-6 pl-4">
                                                                     <div className="text-sm font-semibold text-gray-700 mb-3">BOOKS</div>
@@ -445,7 +630,6 @@
                                                                 </div>
                                                             )}
 
-                                                            {/* Foundational Skills Tab */}
                                                             {selectedStudentTab[student.id] === 'foundational' && (
                                                                 <div>
                                                                     <div className="text-sm font-semibold text-gray-700 mb-3">TASK</div>
@@ -506,46 +690,143 @@
                 </>
             );
 
-            const renderCurriculumPage = () => (
-                <>
-                    <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-4">Curriculum for Kindergarten</h1>
-                    </div>
+            const [selectedCurriculumGrade, setSelectedCurriculumGrade] = useState('K');
+            const [selectedModuleFilter, setSelectedModuleFilter] = useState('all');
 
-                    <div className="space-y-6">
-                        {/* Module 1 */}
-                        <div className="bg-purple-50 rounded-lg p-6 border-l-4 border-purple-500">
-                            <h2 className="text-2xl font-bold text-purple-700 mb-2">Module 1. In the Forest</h2>
-                            <p className="text-gray-700 mb-4">Letters: M, T, P, N, A - Isolate initial sounds, match letters, recognize rhymes</p>
+            const renderCurriculumPage = () => {
+                const colorClasses = {
+                    purple: { bg: 'bg-purple-50', text: 'text-purple-700' },
+                    orange: { bg: 'bg-orange-50', text: 'text-orange-700' },
+                    blue: { bg: 'bg-blue-50', text: 'text-blue-700' },
+                    green: { bg: 'bg-green-50', text: 'text-green-700' },
+                    pink: { bg: 'bg-pink-50', text: 'text-pink-700' }
+                };
+
+                const filteredModules = selectedModuleFilter === 'all' 
+                    ? (selectedCurriculumGrade === 'K' ? curriculumModulesK : curriculumModulesG1)
+                    : (selectedCurriculumGrade === 'K' ? curriculumModulesK : curriculumModulesG1).filter(m => m.id === parseInt(selectedModuleFilter));
+
+                return (
+                    <>
+                        <div className="mb-6">
+                            <div className="flex items-center justify-between mb-6">
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => setSelectedCurriculumGrade('K')}
+                                        className={`px-6 py-2 rounded-lg font-semibold ${
+                                            selectedCurriculumGrade === 'K'
+                                                ? 'bg-purple-600 text-white'
+                                                : 'bg-purple-100 text-purple-600 hover:bg-purple-200'
+                                        }`}
+                                    >
+                                        Kindergarten
+                                    </button>
+                                    <button
+                                        onClick={() => setSelectedCurriculumGrade('G1')}
+                                        className={`px-6 py-2 rounded-lg font-semibold ${
+                                            selectedCurriculumGrade === 'G1'
+                                                ? 'bg-purple-600 text-white'
+                                                : 'bg-purple-100 text-purple-600 hover:bg-purple-200'
+                                        }`}
+                                    >
+                                        Grade 1
+                                    </button>
+                                </div>
+                                <button className="flex items-center gap-2 px-6 py-2.5 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    PDF
+                                </button>
+                            </div>
+
+                            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                                Curriculum for {selectedCurriculumGrade === 'K' ? 'Kindergarten' : 'Grade 1'}
+                            </h1>
                         </div>
 
-                        {/* Module 2 */}
-                        <div className="bg-orange-50 rounded-lg p-6 border-l-4 border-orange-500">
-                            <h2 className="text-2xl font-bold text-orange-700 mb-2">Module 2. Under the Sea</h2>
-                            <p className="text-gray-700 mb-4">Letters: B, L, K, H, E - Isolate initial/final sounds, word families, rhyming</p>
-                        </div>
+                        <div className="space-y-6">
+                            {filteredModules.map((module) => {
+                                const colors = colorClasses[module.color];
+                                return (
+                                    <div key={module.id} className={`${colors.bg} rounded-lg overflow-hidden`}>
+                                        <div 
+                                            className="p-6 cursor-pointer flex items-center justify-between"
+                                            onClick={() => toggleModule(module.id)}
+                                        >
+                                            <div className="flex-1">
+                                                <h2 className={`text-2xl font-bold ${colors.text} mb-2`}>{module.title}</h2>
+                                                <p className="text-gray-700">{module.description}</p>
+                                            </div>
+                                            <ChevronDown
+                                                className={`${colors.text} transition-transform ml-4 ${
+                                                    expandedModules[module.id] ? 'rotate-180' : ''
+                                                }`}
+                                                size={24}
+                                            />
+                                        </div>
 
-                        {/* Module 3 */}
-                        <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
-                            <h2 className="text-2xl font-bold text-blue-700 mb-2">Module 3. On the Farm</h2>
-                            <p className="text-gray-700 mb-4">Letters: C, D, G, S, O - Recognize final sounds, medial vowels in CVC words</p>
+                                        {expandedModules[module.id] && (
+                                            <div className="px-6 pb-6">
+                                                <div className="bg-white rounded-lg overflow-hidden shadow">
+                                                    <table className="w-full">
+                                                        <thead className="bg-gray-50 border-b-2 border-gray-200">
+                                                            <tr>
+                                                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase" style={{width: selectedCurriculumGrade === 'K' ? '80px' : '35%'}}>
+                                                                    {selectedCurriculumGrade === 'K' ? 'Unit' : 'Lesson Name'}
+                                                                </th>
+                                                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">
+                                                                    {selectedCurriculumGrade === 'K' ? 'Phonics' : 'Instructional Focus'}
+                                                                </th>
+                                                                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">
+                                                                    {selectedCurriculumGrade === 'K' ? 'Phonological awareness' : 'CCSS alignment'}
+                                                                </th>
+                                                                {selectedCurriculumGrade === 'K' && (
+                                                                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Standards alignment</th>
+                                                                )}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {module.units.map((unit, idx) => (
+                                                                <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                                                                    <td className="px-4 py-4 text-sm text-gray-900">
+                                                                        <div>
+                                                                            <div className="font-medium mb-1">
+                                                                                {selectedCurriculumGrade === 'K' ? unit.unit : unit.lessonName}
+                                                                            </div>
+                                                                            {unit.ready && (
+                                                                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                                                                                    <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+                                                                                    Ready
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-4 py-4 text-sm text-gray-900">
+                                                                        {selectedCurriculumGrade === 'K' ? unit.phonics : unit.instructionalFocus}
+                                                                    </td>
+                                                                    <td className="px-4 py-4 text-sm text-gray-700">
+                                                                        {selectedCurriculumGrade === 'K' ? unit.phonological : unit.standards}
+                                                                    </td>
+                                                                    {selectedCurriculumGrade === 'K' && (
+                                                                        <td className="px-4 py-4 text-sm text-gray-700">{unit.standards}</td>
+                                                                    )}
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
-
-                        {/* Module 4 */}
-                        <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
-                            <h2 className="text-2xl font-bold text-green-700 mb-2">Module 4. Through the Snowy Land</h2>
-                            <p className="text-gray-700 mb-4">Letters: J, F, R, V, W, I - Blending sounds in CVC words, segment sounds, produce rhymes</p>
-                        </div>
-
-                        {/* Module 5 */}
-                        <div className="bg-pink-50 rounded-lg p-6 border-l-4 border-pink-500">
-                            <h2 className="text-2xl font-bold text-pink-700 mb-2">Module 5. On the Town</h2>
-                            <p className="text-gray-700 mb-4">Letters: Q, X, Y, Z, U - Alphabetical order, blending/segmenting, distinguishing similar words</p>
-                        </div>
-                    </div>
-                </>
-            );
-
+                    </>
+                );
+            };
 
             const renderLibraryPage = () => (
                 <>
@@ -554,10 +835,10 @@
                             <button
                                 key={grade}
                                 onClick={() => setSelectedLibraryGrade(grade)}
-                                className={`px-5 py-2.5 rounded-lg font-semibold transition-all ${
+                                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
                                     selectedLibraryGrade === grade
-                                        ? 'bg-cyan-500 text-white shadow-md'
-                                        : 'bg-cyan-100 text-cyan-600 hover:bg-cyan-200'
+                                        ? 'bg-purple-600 text-white'
+                                        : 'bg-purple-100 text-purple-600 hover:bg-purple-200'
                                 }`}
                             >
                                 {grade}
@@ -607,7 +888,6 @@
                         if (filteredTexts.length === 0 && selectedType) return null;
                         if (selectedTopic && selectedTopic !== topic.id) return null;
 
-                        
                         return (
                             <div key={topic.id} className="mb-8">
                                 <div
@@ -630,11 +910,11 @@
                                                 key={text.id}
                                                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
                                             >
-                                                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                                                <div className="aspect-[3/2] overflow-hidden bg-gray-100">
                                                     <img 
                                                         src={text.image} 
                                                         alt={text.title}
-                                                        className="w-full h-full object-cover object-center"
+                                                        className="w-full h-full object-contain"
                                                         onError={(e) => {
                                                             e.target.style.display = 'none';
                                                             e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center p-4 bg-gray-50"><h3 class="text-base font-bold text-gray-800 text-center leading-snug">${text.title}</h3></div>`;
