@@ -824,19 +824,20 @@
                                                         <tbody>
                                                             {module.units.map((unit, idx) => (
                                                                 <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                                                                    <td className="px-4 py-4 text-sm text-gray-900 font-medium">
+                                                                        {selectedCurriculumGrade === 'K' ? unit.unit : unit.lessonName}
+                                                                    </td>
                                                                     <td className="px-4 py-4 text-sm text-gray-900">
-                                                                        <div>
-                                                                            <div className="font-medium mb-1">
-                                                                                {selectedCurriculumGrade === 'K' ? unit.unit : unit.lessonName}
-                                                                            </div>
+                                                                        <div className="flex flex-col gap-2">
+                                                                            <div>{selectedCurriculumGrade === 'K' ? unit.phonics : unit.instructionalFocus}</div>
                                                                             {unit.ready && (
-                                                                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                                                                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700 w-fit">
                                                                                     <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
                                                                                     Ready
                                                                                 </span>
                                                                             )}
                                                                         </div>
-                                                                    </td>
+                                                                    </td>                                                               
                                                                     <td className="px-4 py-4 text-sm text-gray-900">
                                                                         {selectedCurriculumGrade === 'K' ? unit.phonics : unit.instructionalFocus}
                                                                     </td>
