@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Letters - Curriculum</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const ChevronDown = ({ className, size }) => (
+            <svg 
+                className={className}
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+            >
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        );
+
+        const HappyLettersCurriculum = () => {
+            const [currentPage, setCurrentPage] = useState('curriculum');
+            const [selectedLibraryGrade, setSelectedLibraryGrade] = useState('K');
+            const [selectedSkill, setSelectedSkill] = useState('');
+            const [selectedType, setSelectedType] = useState('');
+            const [selectedTopic, setSelectedTopic] = useState('');
+            const [expandedTopics, setExpandedTopics] = useState({});
+            const [expandedStudents, setExpandedStudents] = useState({ 1: true });
+            const [rosterData, setRosterData] = useState([
+                { id: 1, name: 'Sophia Martinez', password: '150', accessELA: true, accessFoundational: true, accessReading: false, allowReadAloud: false, dyslexiaSupport: false },
+                { id: 2, name: 'Jackson Lee', password: '234', accessELA: true, accessFoundational: true, accessReading: true, allowReadAloud: false, dyslexiaSupport: false },
+                { id: 3, name: 'Isabella Chen', password: '567', accessELA: true, accessFoundational: true, accessReading: false, allowReadAloud: true, dyslexiaSupport: true },
+                { id: 4, name: 'Ethan Rodriguez', password: '891', accessELA: false, accessFoundational: true, accessReading: false, allowReadAloud: false, dyslexiaSupport: false },
+                { id: 5, name: 'Mia Thompson', password: '432', accessELA: true, accessFoundational: true, accessReading: true, allowReadAloud: true, dyslexiaSupport: false },
+                { id: 6, name: 'Lucas Anderson', password: '678', accessELA: true, accessFoundational: true, accessReading: true, allowReadAloud: false, dyslexiaSupport: true },
+            ]);
+
+            const toggleTopic = (topicId) => {
+                setExpandedTopics(prev => ({
+                    ...prev,
+                    [topicId]: !prev[topicId]
+                }));
+            };
+
+            const toggleStudent = (studentId) => {
+                setExpandedStudents(prev => ({
+                    ...prev,
+                    [studentId]: !prev[studentId]
+                }));
+            };
+
+            const [selectedStudentTab, setSelectedStudentTab] = useState({});
+
+            const updateRosterCheckbox = (studentId, field) => {
+                setRosterData(prev => prev.map(student => 
+                    student.id === studentId 
+                        ? { ...student, [field]: !student[field] }
+                        : student
+                ));
+            };
+
+            const toggleAllELA = () => {
+                const allChecked = rosterData.every(s => s.accessELA);
+                setRosterData(prev => prev.map(student => ({ ...student, accessELA: !allChecked })));
+            };
+
+            const grades = ['K', 'G1', 'G2', 'G3', 'G4', 'G5'];
+
+            const weeklyReportData = [
+                { 
+                    id: 1, 
+                    name: 'Sophia Martinez', 
+                    timeSpent: '27 min', 
+                    accuracy: '85%',
+                    readingTime: '24 min',
+                    foundationalTime: '3 min',
+                    foundationalTasks: [
+                        { unit: 'GK. M1. Unit 1: Letter/sound m', tasks: [
+                            { name: 'Introduction to letter M', started: 'Jan 9', timeSpent: '2 min', accuracy: '100%' },
+                            { name: 'Recognizing letter M', started: 'Jan 9', timeSpent: '2 min', accuracy: '100%' },
+                            { name: 'Letter M formation', started: 'Jan 9', timeSpent: '1 min', accuracy: '75%' },
+                            { name: 'Letter M identification (Part 1)', started: 'Jan 9', timeSpent: '3 min', accuracy: '80%' },
+                            { name: 'Letter M identification (Part 2)', started: 'Jan 9', timeSpent: '2 min', accuracy: '80%' },
+                        ]},
+                        { unit: 'GK. M1. Unit 2: Letter/sound t', tasks: [
+                            { name: 'Introduction to letter T', started: 'Jan 11', timeSpent: '2 min', accuracy: '75%' },
+                            { name: 'Recognizing letter T', started: 'Jan 11', timeSpent: '2 min', accuracy: '80%' },
+                            { name: 'Letter T formation', started: 'Jan 11', timeSpent: '3 min', accuracy: '80%', status: 'in-progress' },
+                        ]}
+                    ],
+                    books: [
+                        {
+                            title: 'Fun in the pool',
+                            time: '24 min',
+                            status: 'done',
+                            skills: [
+                                { name: 'What the text says', started: 'Jan 9', correctAttempts: '1 out of 2', accuracy: '50%' },
+                                { name: 'Main idea, key details, summarization', started: 'Jan 9', correctAttempts: '1 out of 1', accuracy: '100%' },
+                                { name: 'Word meaning & choice', started: 'Jan 9', correctAttempts: '2 out of 2', accuracy: '100%' }
+                            ]
+                        },
+                        {
+                            title: 'The Magic Snow Day',
+                            time: '18 min',
+                            status: 'in-progress',
+                            skills: [
+                                { name: 'Connecting people, events & ideas', started: 'Jan 10', correctAttempts: '2 out of 3', accuracy: '67%' },
+                                { name: 'Text structure', started: 'Jan 10', correctAttempts: '1 out of 2', accuracy: '50%' }
+                            ]
+                        }
+                    ]
+                },
+                { id: 2, name: 'Jackson Lee', timeSpent: '52 min', accuracy: '92%', readingTime: '45 min', foundationalTime: '7 min', foundationalTasks: [], books: [] },
+                { id: 3, name: 'Isabella Chen', timeSpent: '38 min', accuracy: '78%', readingTime: '30 min', foundationalTime: '8 min', foundationalTasks: [], books: [] },
+                { id: 4, name: 'Ethan Rodriguez', timeSpent: '41 min', accuracy: '88%', readingTime: '35 min', foundationalTime: '6 min', foundationalTasks: [], books: [] },
+                { id: 5, name: 'Mia Thompson', timeSpent: '49 min', accuracy: '95%', readingTime: '40 min', foundationalTime: '9 min', foundationalTasks: [], books: [] },
+                { id: 6, name: 'Lucas Anderson', timeSpent: '35 min', accuracy: '72%', readingTime: '28 min', foundationalTime: '7 min', foundationalTasks: [], books: [] },
+            ];
+
+            const readingSkills = [
+                'What the text says - Main idea, key details, summarization',
+                'Connecting people, events & ideas',
+                'Word meaning & choice',
+                'Text structure',
+                'Point of view & purpose',
+                'Interpret multimedia',
+                'Arguments & claims'
+            ];
+
+            const libraryTopics = [
+                {
+                    id: 'holidays',
+                    name: 'Holidays',
+                    texts: [
+                        { id: 1, title: 'The Magic Snow Day', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.7'], image: 'https://raw.githubusercontent.com/om972/book_preview/450de55e0a6367d0497f87b5b2e47e9e938e41f6/Blue%20dog%20on%20a%20sofa' },
+                        { id: 2, title: 'A Pumpkin for Everyone', type: 'Literature', level: 1, standards: ['K.RL.2', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_2' },
+                        { id: 3, title: 'Bunny\'s Spring Surprise', type: 'Literature', level: 3, standards: ['K.RL.1', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_3' },
+                        { id: 4, title: 'The 100th Day of School Party', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_4' },
+                        { id: 5, title: 'Fireworks for the Fourth!', type: 'Informational', level: 3, standards: ['K.RI.3', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_5' },
+                        { id: 6, title: 'A Valentine for My Friend', type: 'Literature', level: 1, standards: ['K.RL.5', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_6' },
+                        { id: 7, title: 'The Little Turkey\'s Secret', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_7' },
+                        { id: 8, title: 'Santa\'s Smallest Helper', type: 'Literature', level: 3, standards: ['K.RL.3', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_8' },
+                        { id: 9, title: 'The Egg Hunt Adventure', type: 'Literature', level: 4, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_9' },
+                        { id: 10, title: 'New Year, New Me!', type: 'Informational', level: 2, standards: ['K.RI.1', 'K.RI.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_10' }
+                    ]
+                },
+                {
+                    id: 'sports',
+                    name: 'Sports',
+                    texts: [
+                        { id: 11, title: 'Ben Kicks the Ball', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_11' },
+                        { id: 12, title: 'Lila Learns to Swim', type: 'Literature', level: 2, standards: ['K.RL.2', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_12' },
+                        { id: 13, title: 'Teddy\'s First Tennis Match', type: 'Literature', level: 3, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_13' },
+                        { id: 14, title: 'The Fastest Skater', type: 'Literature', level: 4, standards: ['K.RL.3', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_14' },
+                        { id: 15, title: 'We Win as a Team', type: 'Informational', level: 3, standards: ['K.RI.1', 'K.RI.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_15' },
+                        { id: 16, title: 'Mia\'s Jump Rope Challenge', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_16' },
+                        { id: 17, title: 'The Little Basketball Star', type: 'Literature', level: 3, standards: ['K.RL.4', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_17' },
+                        { id: 18, title: 'Run, Sam, Run!', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_18' },
+                        { id: 19, title: 'The Big Game Day', type: 'Informational', level: 4, standards: ['K.RI.2', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_19' },
+                        { id: 20, title: 'My First Soccer Goal', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_20' }
+                    ]
+                },
+                {
+                    id: 'animals',
+                    name: 'Animals',
+                    texts: [
+                        { id: 21, title: 'The Lost Kitten', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_21' },
+                        { id: 22, title: 'Bear\'s Big Picnic', type: 'Literature', level: 2, standards: ['K.RL.3', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_22' },
+                        { id: 23, title: 'A Frog in My Boot', type: 'Literature', level: 2, standards: ['K.RL.1', 'K.RL.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_23' },
+                        { id: 24, title: 'The Busy Ant Parade', type: 'Informational', level: 3, standards: ['K.RI.1', 'K.RI.2'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_24' },
+                        { id: 25, title: 'Puppy Finds a Home', type: 'Literature', level: 1, standards: ['K.RL.1', 'K.RL.3'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_25' },
+                        { id: 26, title: 'Ellie the Elephant Learns to Dance', type: 'Literature', level: 4, standards: ['K.RL.2', 'K.RL.6'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_26' },
+                        { id: 27, title: 'Tiny Turtle\'s Big Adventure', type: 'Literature', level: 3, standards: ['K.RL.1', 'K.RL.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_27' },
+                        { id: 28, title: 'The Clever Fox and the Hen', type: 'Literature', level: 5, standards: ['K.RL.3', 'K.RL.7'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_28' },
+                        { id: 29, title: 'Buzzy the Bee Helps Out', type: 'Informational', level: 2, standards: ['K.RI.3', 'K.RI.4'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_29' },
+                        { id: 30, title: 'The Animal Parade', type: 'Informational', level: 3, standards: ['K.RI.1', 'K.RI.5'], image: 'https://drive.google.com/uc?export=view&id=YOUR_FILE_ID_30' }
+                    ]
+                }
+            ];
+
+            const renderRosterPage = () => (
+                <>
+                    <div className="mb-6">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-4">Grade 2</h1>
+                        <div className="space-y-1 text-gray-700 text-sm">
+                            <p><span className="font-semibold">Class number:</span> 522 261 791</p>
+                            <p><span className="font-semibold">Grade:</span> Grade 2</p>
+                        </div>
+                        <button className="mt-3 text-blue-600 hover:text-blue-700 flex items-center gap-1 text-sm">
+                            <span>✏️ Edit roster on Happy Numbers</span>
+                        </button>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">№</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Student's Name</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Password</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                                        <div className="flex items-center gap-2">
+                                            Access to ELA
+                                            <button 
+                                                onClick={toggleAllELA}
+                                                className="text-blue-600 hover:text-blue-700 text-xs font-normal"
+                                            >
+                                                Select All
+                                            </button>
+                                        </div>
+                                    </th>
+                                    <th className="px-6 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rosterData.map((student, index) => (
+                                    <React.Fragment key={student.id}>
+                                        <tr className="border-b border-gray-200 hover:bg-gray-50">
+                                            <td className="px-6 py-4 text-sm text-gray-700">{index + 1}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-900 font-medium">{student.name}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-700">{student.password}</td>
+                                            <td className="px-6 py-4">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={student.accessELA}
+                                                    onChange={() => updateRosterCheckbox(student.id, 'accessELA')}
+                                                    className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded cursor-pointer"
+                                                />
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <button
+                                                    onClick={() => toggleStudent(student.id)}
+                                                    className="text-gray-600 hover:text-gray-900"
+                                                >
+                                                    <ChevronDown
+                                                        className={`transition-transform ${
+                                                            expandedStudents[student.id] ? 'rotate-180' : ''
+                                                        }`}
+                                                        size={20}
+                                                    />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        {expandedStudents[student.id] && (
+                                            <tr className="bg-purple-50">
+                                                <td colSpan="5" className="px-6 py-6">
+                                                    <div className="space-y-3 ml-8">
+                                                        <label className="flex items-center gap-3 cursor-not-allowed">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={student.accessFoundational}
+                                                                disabled
+                                                                className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded cursor-not-allowed"
+                                                            />
+                                                            <span className="text-sm text-gray-900 font-medium">Access to Foundational Skills</span>
+                                                        </label>
+                                                        <label className="flex items-center gap-3 cursor-pointer">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={student.accessReading}
+                                                                onChange={() => updateRosterCheckbox(student.id, 'accessReading')}
+                                                                className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                                            />
+                                                            <span className="text-sm text-gray-900 font-medium">Access to Reading</span>
+                                                        </label>
+                                                        <div className="ml-10 space-y-3">
+                                                            <label className="flex items-center gap-3 cursor-pointer">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={student.allowReadAloud}
+                                                                    onChange={() => updateRosterCheckbox(student.id, 'allowReadAloud')}
+                                                                    className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                                                />
+                                                                <span className="text-sm text-gray-900">Allow read aloud</span>
+                                                            </label>
+                                                            <label className="flex items-center gap-3 cursor-pointer">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={student.dyslexiaSupport}
+                                                                    onChange={() => updateRosterCheckbox(student.id, 'dyslexiaSupport')}
+                                                                    className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                                                />
+                                                                <span className="text-sm text-gray-900">Dyslexia support</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="mt-6 flex justify-end">
+                        <button className="flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download passwords
+                        </button>
+                    </div>
+                </>
+            );
+
+            const renderReportsPage = () => (
+                <>
+                    <div className="mb-6">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Weekly report</h1>
+                        <p className="text-gray-600">Gain a better understanding of how your class and individual students are performing on a weekly basis</p>
+                    </div>
+
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-2 text-gray-700">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span className="font-semibold">October 27 – November 2</span>
+                        </div>
+                        <button className="flex items-center gap-2 px-4 py-2 text-purple-600 border-2 border-purple-600 rounded-lg hover:bg-purple-50 font-medium">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                            </svg>
+                            Refresh data
+                        </button>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Student</th>
+                                    <th className="px-6 py-3 text-right text-sm font-semibold text-gray-700">Weekly Time Spent</th>
+                                    <th className="px-6 py-3 text-right text-sm font-semibold text-gray-700">Weekly Accuracy</th>
+                                    <th className="px-6 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {weeklyReportData.map((student) => (
+                                    <React.Fragment key={student.id}>
+                                        <tr className="border-b border-gray-200 hover:bg-gray-50">
+                                            <td className="px-6 py-4 text-sm text-gray-900 font-medium">{student.name}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-700 text-right">{student.timeSpent}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-700 text-right">{student.accuracy}</td>
+                                            <td className="px-6 py-4">
+                                                <button
+                                                    onClick={() => toggleStudent(student.id)}
+                                                    className="text-gray-600 hover:text-gray-900"
+                                                >
+                                                    <ChevronDown
+                                                        className={`transition-transform ${
+                                                            expandedStudents[student.id] ? 'rotate-180' : ''
+                                                        }`}
+                                                        size={20}
+                                                    />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        {expandedStudents[student.id] && (
+                                            <tr className="bg-gray-50">
+                                                <td colSpan="4" className="px-6 py-6">
+                                                    {student.id === 1 ? (
+                                                        <>
+                                                            {/* Tabs */}
+                                                            <div className="flex gap-4 mb-4 border-b border-gray-300">
+                                                                <button
+                                                                    onClick={() => setSelectedStudentTab(prev => ({...prev, [student.id]: 'reading'}))}
+                                                                    className={`px-4 py-2 font-medium ${
+                                                                        (!selectedStudentTab[student.id] || selectedStudentTab[student.id] === 'reading')
+                                                                            ? 'text-purple-600 border-b-2 border-purple-600'
+                                                                            : 'text-gray-600 hover:text-gray-800'
+                                                                    }`}
+                                                                >
+                                                                    Reading ({student.readingTime})
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => setSelectedStudentTab(prev => ({...prev, [student.id]: 'foundational'}))}
+                                                                    className={`px-4 py-2 font-medium ${
+                                                                        selectedStudentTab[student.id] === 'foundational'
+                                                                            ? 'text-purple-600 border-b-2 border-purple-600'
+                                                                            : 'text-gray-600 hover:text-gray-800'
+                                                                    }`}
+                                                                >
+                                                                    Foundational skills ({student.foundationalTime})
+                                                                </button>
+                                                            </div>
+
+                                                            {/* Reading Tab */}
+                                                            {(!selectedStudentTab[student.id] || selectedStudentTab[student.id] === 'reading') && (
+                                                                <div className="space-y-6 pl-4">
+                                                                    <div className="text-sm font-semibold text-gray-700 mb-3">BOOKS</div>
+                                                                    <div className="grid grid-cols-12 gap-4 text-xs font-semibold text-gray-600 uppercase mb-2">
+                                                                        <div className="col-span-5"></div>
+                                                                        <div className="col-span-2">STARTED</div>
+                                                                        <div className="col-span-3">CORRECT/ATTEMPTS</div>
+                                                                        <div className="col-span-2">ACCURACY</div>
+                                                                    </div>
+                                                                    {student.books.map((book, idx) => (
+                                                                        <div key={idx} className="mb-6">
+                                                                            <div className="flex items-center gap-3 mb-3">
+                                                                                <h4 className="font-semibold text-gray-900">{book.title} ({book.time})</h4>
+                                                                                {book.status === 'in-progress' && (
+                                                                                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                                                        in progress
+                                                                                    </span>
+                                                                                )}
+                                                                            </div>
+                                                                            <div className="space-y-2">
+                                                                                {book.skills.map((skill, skillIdx) => (
+                                                                                    <div key={skillIdx} className="flex items-center gap-2 hover:bg-gray-100 rounded transition-colors group">
+                                                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-900 group-hover:text-purple-600 flex-shrink-0">
+                                                                                            <circle cx="12" cy="12" r="10"></circle>
+                                                                                            <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                                                                                        </svg>
+                                                                                        <div className="grid grid-cols-12 gap-4 flex-1 py-2">
+                                                                                            <div className="col-span-5 text-sm text-gray-900 group-hover:text-purple-600 font-medium">{skill.name}</div>
+                                                                                            <div className="col-span-2 text-sm text-gray-700">{skill.started}</div>
+                                                                                            <div className="col-span-3 text-sm text-gray-700">{skill.correctAttempts}</div>
+                                                                                            <div className="col-span-2 text-sm text-gray-700">{skill.accuracy}</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                ))}
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+
+                                                            {/* Foundational Skills Tab */}
+                                                            {selectedStudentTab[student.id] === 'foundational' && (
+                                                                <div>
+                                                                    <div className="text-sm font-semibold text-gray-700 mb-3">TASK</div>
+                                                                    {student.foundationalTasks.map((unit, unitIdx) => (
+                                                                        <div key={unitIdx} className="mb-6">
+                                                                            <h4 className="font-semibold text-gray-900 mb-3">{unit.unit}</h4>
+                                                                            <table className="w-full">
+                                                                                <thead className="text-xs font-semibold text-gray-600 uppercase">
+                                                                                    <tr>
+                                                                                        <th className="text-left pb-2"></th>
+                                                                                        <th className="text-left pb-2 pl-4">STARTED</th>
+                                                                                        <th className="text-left pb-2">TIME SPEND</th>
+                                                                                        <th className="text-left pb-2">ACCURACY</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {unit.tasks.map((task, taskIdx) => (
+                                                                                        <tr key={taskIdx} className="border-t border-gray-200 hover:bg-gray-100 group transition-colors">
+                                                                                            <td className="py-2 flex items-center gap-2">
+                                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-900 group-hover:text-purple-600">
+                                                                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                                                                    <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                                                                                                </svg>
+                                                                                                <span className="text-sm text-gray-900 group-hover:text-purple-600">{task.name}</span>
+                                                                                                {task.status === 'in-progress' && (
+                                                                                                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Task in progress</span>
+                                                                                                )}
+                                                                                            </td>
+                                                                                            <td className="py-2 pl-4 text-sm text-gray-700">{task.started}</td>
+                                                                                            <td className="py-2 text-sm text-gray-700">{task.timeSpent}</td>
+                                                                                            <td className={`py-2 text-sm ${
+                                                                                                parseInt(task.accuracy) < 70 ? 'text-red-600 font-semibold' : 'text-gray-700'
+                                                                                            }`}>
+                                                                                                {parseInt(task.accuracy) < 70 && '⚠ '}{task.accuracy}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    ))}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <div className="text-sm text-gray-600">
+                                                            Detailed student activity will be displayed here
+                                                        </div>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            );
+
+            const renderLibraryPage = () => (
+                <>
+                    <div className="flex gap-2 mb-6">
+                        {grades.map((grade) => (
+                            <button
+                                key={grade}
+                                onClick={() => setSelectedLibraryGrade(grade)}
+                                className={`px-5 py-2.5 rounded-lg font-semibold transition-all ${
+                                    selectedLibraryGrade === grade
+                                        ? 'bg-cyan-500 text-white shadow-md'
+                                        : 'bg-cyan-100 text-cyan-600 hover:bg-cyan-200'
+                                }`}
+                            >
+                                {grade}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <select
+                            value={selectedTopic}
+                            onChange={(e) => setSelectedTopic(e.target.value)}
+                            className="px-4 py-3 text-gray-600 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:border-cyan-500 cursor-pointer"
+                        >
+                            <option value="">Topic</option>
+                            <option value="holidays">Holidays</option>
+                            <option value="sports">Sports</option>
+                            <option value="animals">Animals</option>
+                        </select>
+
+                        <select
+                            value={selectedType}
+                            onChange={(e) => setSelectedType(e.target.value)}
+                            className="px-4 py-3 text-gray-600 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:border-cyan-500 cursor-pointer"
+                        >
+                            <option value="">Literature/Informational</option>
+                            <option value="Literature">Literature</option>
+                            <option value="Informational">Informational</option>
+                        </select>
+
+                        <select
+                            value={selectedSkill}
+                            onChange={(e) => setSelectedSkill(e.target.value)}
+                            className="px-4 py-3 text-gray-600 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:border-cyan-500 cursor-pointer"
+                        >
+                            <option value="">Type skill here</option>
+                            {readingSkills.map((skill, idx) => (
+                                <option key={idx} value={skill}>{skill}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {libraryTopics.map((topic) => {
+                        const filteredTexts = selectedType 
+                            ? topic.texts.filter(text => text.type === selectedType)
+                            : topic.texts;
+
+                        if (filteredTexts.length === 0 && selectedType) return null;
+                        if (selectedTopic && selectedTopic !== topic.id) return null;
+
+                        const renderCurriculumPage = () => (
+                <>
+                    <div className="mb-6">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-4">Curriculum for Kindergarten</h1>
+                    </div>
+
+                    <div className="space-y-6">
+                        {/* Module 1 */}
+                        <div className="bg-purple-50 rounded-lg p-6 border-l-4 border-purple-500">
+                            <h2 className="text-2xl font-bold text-purple-700 mb-2">Module 1. In the Forest</h2>
+                            <p className="text-gray-700 mb-4">Letters: M, T, P, N, A - Isolate initial sounds, match letters, recognize rhymes</p>
+                        </div>
+
+                        {/* Module 2 */}
+                        <div className="bg-orange-50 rounded-lg p-6 border-l-4 border-orange-500">
+                            <h2 className="text-2xl font-bold text-orange-700 mb-2">Module 2. Under the Sea</h2>
+                            <p className="text-gray-700 mb-4">Letters: B, L, K, H, E - Isolate initial/final sounds, word families, rhyming</p>
+                        </div>
+
+                        {/* Module 3 */}
+                        <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+                            <h2 className="text-2xl font-bold text-blue-700 mb-2">Module 3. On the Farm</h2>
+                            <p className="text-gray-700 mb-4">Letters: C, D, G, S, O - Recognize final sounds, medial vowels in CVC words</p>
+                        </div>
+
+                        {/* Module 4 */}
+                        <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
+                            <h2 className="text-2xl font-bold text-green-700 mb-2">Module 4. Through the Snowy Land</h2>
+                            <p className="text-gray-700 mb-4">Letters: J, F, R, V, W, I - Blending sounds in CVC words, segment sounds, produce rhymes</p>
+                        </div>
+
+                        {/* Module 5 */}
+                        <div className="bg-pink-50 rounded-lg p-6 border-l-4 border-pink-500">
+                            <h2 className="text-2xl font-bold text-pink-700 mb-2">Module 5. On the Town</h2>
+                            <p className="text-gray-700 mb-4">Letters: Q, X, Y, Z, U - Alphabetical order, blending/segmenting, distinguishing similar words</p>
+                        </div>
+                    </div>
+                </>
+            );
+
+            return (
+                            <div key={topic.id} className="mb-8">
+                                <div
+                                    className="flex items-center justify-between mb-4 cursor-pointer"
+                                    onClick={() => toggleTopic(topic.id)}
+                                >
+                                    <h2 className="text-2xl font-bold text-gray-800">{topic.name}</h2>
+                                    <ChevronDown
+                                        className={`text-gray-600 transition-transform ${
+                                            expandedTopics[topic.id] ? 'rotate-180' : ''
+                                        }`}
+                                        size={24}
+                                    />
+                                </div>
+
+                                {(expandedTopics[topic.id] === undefined || expandedTopics[topic.id]) && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                        {filteredTexts.map((text) => (
+                                            <div
+                                                key={text.id}
+                                                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+                                            >
+                                                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                                                    <img 
+                                                        src={text.image} 
+                                                        alt={text.title}
+                                                        className="w-full h-full object-cover object-center"
+                                                        onError={(e) => {
+                                                            e.target.style.display = 'none';
+                                                            e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center p-4 bg-gray-50"><h3 class="text-base font-bold text-gray-800 text-center leading-snug">${text.title}</h3></div>`;
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="p-4 bg-white">
+                                                    <div className="flex flex-wrap gap-2">
+                                                        <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold border border-gray-300">
+                                                            {text.type}
+                                                        </span>
+                                                        <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold border border-blue-200">
+                                                            Level {text.level}
+                                                        </span>
+                                                        {text.standards.map((standard, idx) => (
+                                                            <span
+                                                                key={idx}
+                                                                className="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-xs font-medium border border-gray-200"
+                                                            >
+                                                                {standard}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+
+                    <div className="text-center mt-8">
+                        <button className="text-cyan-600 hover:text-cyan-700 font-semibold text-lg hover:underline">
+                            Load more printables: 15
+                        </button>
+                    </div>
+                </>
+            );
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    <header className="bg-white border-b border-gray-200 px-6 py-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-8">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                                        <span className="text-white font-bold text-lg">HL</span>
+                                    </div>
+                                    <span className="font-bold text-xl text-gray-800">Happy Letters</span>
+                                </div>
+                                
+                                <nav className="flex gap-1">
+                                    <button className="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-100">
+                                        Math
+                                    </button>
+                                    <button className="px-6 py-2 rounded-full bg-purple-600 text-white">
+                                        ELA
+                                    </button>
+                                </nav>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <select className="px-4 py-2 border border-gray-300 rounded-full text-sm">
+                                    <option>Grade 2: 522 261 791</option>
+                                </select>
+                                <button className="px-4 py-2 border border-gray-300 rounded-full text-sm">
+                                    My Account
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="bg-white border-b border-gray-200 px-6">
+                        <div className="flex items-center justify-between">
+                            <nav className="flex gap-1">
+                                <button 
+                                    onClick={() => setCurrentPage('reports')}
+                                    className={`px-6 py-3 ${currentPage === 'reports' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-600 hover:text-gray-800'}`}
+                                >
+                                    Reports
+                                </button>
+                                <button 
+                                    onClick={() => setCurrentPage('curriculum')}
+                                    className={`px-6 py-3 ${currentPage === 'curriculum' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-600 hover:text-gray-800'}`}
+                                >
+                                    Curriculum
+                                </button>
+                                <button 
+                                    onClick={() => setCurrentPage('library')}
+                                    className={`px-6 py-3 ${currentPage === 'library' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-600 hover:text-gray-800'}`}
+                                >
+                                    Library
+                                </button>
+                                <button className="px-6 py-3 text-gray-600 hover:text-gray-800">
+                                    Printables
+                                </button>
+                                <button 
+                                    onClick={() => setCurrentPage('roster')}
+                                    className={`px-6 py-3 ${currentPage === 'roster' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-600 hover:text-gray-800'}`}
+                                >
+                                    Roster
+                                </button>
+                            </nav>
+                            <button className="px-6 py-2 bg-white border-2 border-purple-600 text-purple-600 rounded-full font-medium hover:bg-purple-50">
+                                Get started
+                            </button>
+                        </div>
+                    </div>
+
+                    <main className="max-w-7xl mx-auto px-6 py-8">
+                        {currentPage === 'library' && renderLibraryPage()}
+                        {currentPage === 'reports' && renderReportsPage()}
+                        {currentPage === 'roster' && renderRosterPage()}
+                        {currentPage === 'curriculum' && <div className="text-center py-20 text-gray-500">Curriculum page coming soon...</div>}
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<HappyLettersCurriculum />);
+    </script>
+</body>
+</html>
