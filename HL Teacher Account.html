@@ -1161,6 +1161,24 @@
                                     {selectedBook.title}
                                     {selectedBook.selectedSkill && ` - ${selectedBook.selectedSkill.name}`}
                                 </h2>
+                                {/* Moved question indicator up here */}
+                                <div className="flex items-center gap-2">
+                                    <h3 className="text-lg font-semibold text-gray-800">
+                                      Question {selectedBook.selectedSkill.questionNumbers[currentImageIndex]}
+                                      <span
+                                        className={`ml-2 ${
+                                          selectedBook.selectedSkill.correctAnswers[currentImageIndex]
+                                            ? 'text-green-600'
+                                            : 'text-red-600'
+                                        }`}
+                                      >
+                                        ({selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'Correct' : 'Incorrect'})
+                                      </span>
+                                    </h3>
+                                  </div>
+                                </div>
+
+                                  
                                 
                                 <div className="space-y-6">
                                     {selectedBook.selectedSkill?.images && (
@@ -1174,14 +1192,14 @@
                                                     }`}>
                                                         {selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? '✓' : '✗'}
                                                     </div>
-                                                    <h3 className="text-xl font-semibold text-gray-800">
+                                                    {/* <h3 className="text-xl font-semibold text-gray-800">
                                                         Question {selectedBook.selectedSkill.questionNumbers[currentImageIndex]}
                                                         <span className={`ml-2 text-base ${
                                                             selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'text-green-600' : 'text-red-600'
                                                         }`}>
                                                             ({selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'Correct' : 'Incorrect'})
                                                         </span>
-                                                    </h3>
+                                                    </h3> */}
                                                 </div>
                     
                                                 {/* Image display */}
