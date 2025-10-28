@@ -88,6 +88,15 @@
                 setRosterData(prev => prev.map(student => ({ ...student, accessELA: !allChecked })));
             };
 
+            const updateStartingPoint = (studentId, newStartingPoint) => {
+                setRosterData(prev => prev.map(student => 
+                    student.id === studentId 
+                        ? { ...student, startingPoint: newStartingPoint }
+                        : student
+                ));
+                setEditingStartingPoint(null);
+            };
+
             const grades = ['K', 'G1', 'G2'];
 
             const curriculumModulesK = [
