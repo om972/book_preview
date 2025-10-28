@@ -1081,16 +1081,6 @@
                                     {selectedBook.title}
                                     {selectedBook.selectedSkill && ` - ${selectedBook.selectedSkill.name}`}
                                 </h2>
-                                
-                                <div className="flex flex-col items-center gap-4">
-                                    {selectedBook.selectedSkill?.image && (
-                                        <img 
-                                            src={selectedBook.selectedSkill.image} 
-                                            alt={selectedBook.selectedSkill.name} 
-                                            className="max-w-2xl w-full rounded-lg shadow" 
-                                        />
-                                    )}
-                                </div>
                             </div>
                         </div>
                     )}
