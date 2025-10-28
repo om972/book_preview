@@ -299,11 +299,11 @@
                     ],
                     books: [
                         {
-                            title: 'Fun in the pool',
+                            title: 'Miss Sheep Says No',
                             time: '24 min',
                             status: 'done',
                             skills: [
-                                { name: 'What the text says', started: 'Jan 9', correctAttempts: '1 out of 2', accuracy: '50%' },
+                                { name: 'What the text says', started: 'Jan 9', correctAttempts: '1 out of 2', accuracy: '50%' , image: 'https://raw.githubusercontent.com/om972/book_preview/YOUR_COMMIT_HASH/question1.png'},
                                 { name: 'Main idea, key details, summarization', started: 'Jan 9', correctAttempts: '1 out of 1', accuracy: '100%' },
                                 { name: 'Word meaning & choice', started: 'Jan 9', correctAttempts: '2 out of 2', accuracy: '100%' }
                             ]
@@ -1082,8 +1082,17 @@
                                     {selectedBook.selectedSkill && ` - ${selectedBook.selectedSkill.name}`}
                                 </h2>
                                 
-                                <div className="text-center py-20 text-gray-500">
-                                    {selectedBook.selectedSkill ? 'Question details will be displayed here' : 'Book details will be displayed here'}
+                                <div className="flex flex-col items-center gap-4">
+                                    {selectedBook.selectedSkill?.image && (
+                                        <img 
+                                            src={selectedBook.selectedSkill.image} 
+                                            alt={selectedBook.selectedSkill.name} 
+                                            className="max-w-2xl w-full rounded-lg shadow" 
+                                        />
+                                    )}
+                                    <div className="text-center py-10 text-gray-500">
+                                        {selectedBook.selectedSkill ? 'Question details will be displayed here' : 'Book details will be displayed here'}
+                                    </div>
                                 </div>
                             </div>
                         </div>
