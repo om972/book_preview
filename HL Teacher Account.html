@@ -1157,26 +1157,34 @@
                                     ×
                                 </button>
                                 
-                                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                {/* Title + Question on one row */}
+                                <div className="flex items-center justify-between mb-6">
+                                  <h2 className="text-2xl font-bold text-gray-900">
                                     {selectedBook.title}
                                     {selectedBook.selectedSkill && ` - ${selectedBook.selectedSkill.name}`}
-                                </h2>
-                                {/* Moved question indicator up here */}
-                                <div className="flex items-center gap-2">
-                                    <h3 className="text-lg font-semibold text-gray-800">
+                                  </h2>
+                                
+                                  <div className="flex items-center gap-2">
+                                    <div
+                                      className={`w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                                        selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'bg-green-500' : 'bg-red-500'
+                                      }`}
+                                    >
+                                      {selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? '✓' : '✗'}
+                                    </div>
+                                    <span className="text-lg font-semibold text-gray-800">
                                       Question {selectedBook.selectedSkill.questionNumbers[currentImageIndex]}
                                       <span
                                         className={`ml-2 ${
-                                          selectedBook.selectedSkill.correctAnswers[currentImageIndex]
-                                            ? 'text-green-600'
-                                            : 'text-red-600'
+                                          selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'text-green-600' : 'text-red-600'
                                         }`}
                                       >
                                         ({selectedBook.selectedSkill.correctAnswers[currentImageIndex] ? 'Correct' : 'Incorrect'})
                                       </span>
-                                    </h3>
+                                    </span>
                                   </div>
                                 </div>
+
                                 <div className="space-y-6">
                                     {selectedBook.selectedSkill?.images && (
                                         <>  
